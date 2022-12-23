@@ -2,10 +2,11 @@ import styled from 'styled-components';
 import { IoMdInformationCircleOutline } from 'react-icons/io';
 
 export const ReasonText = styled.p`
-  opacity: 0;
+  display: none;
   position: absolute;
   color: gray;
-  top: 0;
+  max-height: 120px;
+  top: 4px;
   right: -130px;
   left: 102%;
 `;
@@ -22,7 +23,7 @@ export const InformIcon = styled(IoMdInformationCircleOutline)`
   }
 
   :hover + ${ReasonText} {
-    opacity: 1;
+    display: inline;
     font-size: 10pt;
   }
 `;
