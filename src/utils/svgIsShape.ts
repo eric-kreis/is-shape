@@ -8,19 +8,25 @@ const allowedTagNames = new Set([
   'title',
 ]);
 
-const svgIsShape = (svgContent: string): boolean => {
+const svgIsShape = (svgContent: string): { isShape: boolean, reason?: string } => {
   const svgParsed = parse(svgContent);
-
+  let reason = '';
   let firstColor: number | string = '';
 
   const validateSvg = (node: Node | string): boolean => {
     if (typeof node === 'string' || node.type === 'text') return true;
 
-    if (node.tagName && !allowedTagNames.has(node.tagName)) return false;
+    if (node.tagName && !allowedTagNames.has(node.tagName)) {
+      reason = `Este elemento possui em seu corpo a tag "${node.tagName}", impossibilitando a edição`;
+      return false;
+    }
 
     if (node.tagName === 'path' && node.properties?.fill) {
       if (!firstColor) firstColor = node.properties.fill;
-      if (firstColor && firstColor !== node.properties.fill) return false;
+      if (firstColor && firstColor !== node.properties.fill) {
+        reason = 'Este elemento possui em seu corpo "paths" com cores diferentes, impossibilitando a edição';
+        return false;
+      }
     }
 
     if (!node.children) return true;
@@ -28,7 +34,10 @@ const svgIsShape = (svgContent: string): boolean => {
     return node.children.every((child) => validateSvg(child));
   };
 
-  return validateSvg(svgParsed.children[0]);
+  return {
+    isShape: validateSvg(svgParsed.children[0]),
+    reason: reason || undefined,
+  };
 };
 
 export default svgIsShape;
