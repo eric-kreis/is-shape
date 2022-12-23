@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import Dropzone from './components/Dropzone';
-import Resultzone from './components/Resultzone';
+import Dropzone from './components/dropzone';
+import Resultzone from './components/resultzone';
 import GlobalStyle from './styles/global';
 
 export interface SentFile {
@@ -18,8 +18,9 @@ function App() {
   const clearSentFiles = () => setSentFiles([]);
 
   return (
-    <div>
+    <div className="app">
       <GlobalStyle />
+      <h1>Seu elemento tá no shape?</h1>
       <Dropzone handleSentFile={handleSentFile} clearSentFiles={clearSentFiles} />
       <Resultzone sentFiles={sentFiles} />
     </div>
