@@ -8,6 +8,8 @@ const allowedTagNames = new Set([
   'title',
 ]);
 
+const reasonStartMessage = 'Este elemento não é um shape porque possui em seu corpo';
+
 const svgIsShape = (svgContent: string): { isShape: boolean, reason?: string } => {
   const svgParsed = parse(svgContent);
   let reason = '';
@@ -17,15 +19,22 @@ const svgIsShape = (svgContent: string): { isShape: boolean, reason?: string } =
     if (typeof node === 'string' || node.type === 'text') return true;
 
     if (node.tagName && !allowedTagNames.has(node.tagName)) {
-      reason = `Este elemento possui em seu corpo a tag "${node.tagName}", impossibilitando a edição`;
+      reason = `${reasonStartMessage} a tag "${node.tagName}"`;
       return false;
     }
 
-    if (node.tagName === 'path' && node.properties?.fill) {
-      if (!firstColor) firstColor = node.properties.fill;
-      if (firstColor && firstColor !== node.properties.fill) {
-        reason = 'Este elemento possui em seu corpo "paths" com cores diferentes, impossibilitando a edição';
+    if (node.tagName === 'path') {
+      if (node.properties?.style) {
+        reason = `${reasonStartMessage} "paths" com estilos complexos`;
         return false;
+      }
+
+      if (node.properties?.fill) {
+        if (!firstColor) firstColor = node.properties.fill;
+        if (firstColor && firstColor !== node.properties.fill) {
+          reason = `${reasonStartMessage} "paths" com cores diferentes`;
+          return false;
+        }
       }
     }
 
