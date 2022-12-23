@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Dropzone from './components/Dropzone';
 import Resultzone from './components/Resultzone';
+import GlobalStyle from './styles/global';
 
 export interface SentFile {
   name: string;
@@ -18,6 +19,7 @@ function App() {
 
   return (
     <div>
+      <GlobalStyle />
       <Dropzone handleSentFile={handleSentFile} clearSentFiles={clearSentFiles} />
       <Resultzone sentFiles={sentFiles} />
     </div>
