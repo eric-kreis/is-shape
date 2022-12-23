@@ -4,7 +4,7 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import { VscError } from 'react-icons/vsc';
 import type { SentFile } from '../../App';
 import svgIsShape from '../../utils/svgIsShape';
-import { ResultBox, ResultContainer } from './styles';
+import { ResultBox } from './styles';
 
 interface IProps {
   sentFiles: SentFile[];
@@ -20,7 +20,7 @@ function Resultzone({ sentFiles }: IProps) {
   ), [sentFiles]);
 
   return (
-    <ResultContainer>
+    <div>
       { images.map((image, index) => (
         <ResultBox key={`${image.name + index}`} isShape={image.isShape}>
           <div>
@@ -37,7 +37,7 @@ function Resultzone({ sentFiles }: IProps) {
           </p>
         </ResultBox>
       ))}
-    </ResultContainer>
+    </div>
   );
 }
 

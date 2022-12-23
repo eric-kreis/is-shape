@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 
-export const ResultContainer = styled.div`
-  /* padding: 20px; */
-`;
-
 export const ResultBox = styled.section`
   margin-top: 16px;
   padding: 20px 90px;

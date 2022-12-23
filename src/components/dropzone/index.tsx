@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import type { SentFile } from '../../App';
-import { DropBox, DropContainer } from './styles';
+import { DropBox } from './styles';
 
 interface IProps {
   handleSentFile: (sentFile: SentFile) => void;
@@ -34,7 +34,7 @@ function Dropzone({ handleSentFile, clearSentFiles }: IProps) {
   } = useDropzone({ onDrop, accept: { 'image/svg+xml': [] } });
 
   return (
-    <DropContainer>
+    <div>
       <DropBox {...getRootProps({ isFocused, isDragAccept, isDragReject })}>
         <input {...getInputProps()} />
         {
@@ -43,7 +43,7 @@ function Dropzone({ handleSentFile, clearSentFiles }: IProps) {
           ) : <p>Arraste e solte SVGs aqui ou clique para selecionar</p>
         }
       </DropBox>
-    </DropContainer>
+    </div>
   );
 }
 

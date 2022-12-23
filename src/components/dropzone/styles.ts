@@ -1,8 +1,5 @@
 import styled from 'styled-components';
 
-export const DropContainer = styled.div`
-`;
-
 export const DropBox = styled.section`
   flex: 1;
   display: flex;
